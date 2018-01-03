@@ -1,43 +1,15 @@
 import axios from 'axios';
 
-export const FETCH_POSTS = 'fetch_posts';
-export const CREATE_POST = 'create_post';
-export const FETCH_POST = 'fetch_post';
-export const DELETE_POST = 'delete_post';
+const API_KEY = '7f813f7ed282eedf9daabffc2d3041fd';
+const API_URL = `http://api.openweathermap.org/data/2.5/forecast?appid=${API_KEY}`;
 
-const API_URL = 'http://reduxblog.herokuapp.com/api';
-const API_KEY = '?key=pmahanthi1984';
+export const FETCH_WEATHER = 'FETCH_WEATHER';
 
-export function fetchPosts() {
-    let request = axios.get(`${API_URL}/posts${API_KEY}`);
+export function fetchWeather(city) {
+    let url = `${API_URL}&q=${city},us`;
+    let request = axios.get(url);
     return {
-        type: FETCH_POSTS,
+        type: FETCH_WEATHER,
         payload: request
-    }
-}
-
-export function createPost(values, callback) {
-    let request = axios.post(`${API_URL}/posts${API_KEY}`, values)
-                  .then( () => callback() );
-    return {
-        type: CREATE_POST,
-        payload: request
-    }
-}
-
-export function fetchPost(id) {
-    let request = axios.get(`${API_URL}/posts/${id}${API_KEY}`);
-    return {
-        type: FETCH_POST,
-        payload: request
-    }
-}
-
-export function deletePost(id, callback) {
-    let request = axios.delete(`${API_URL}/posts/${id}${API_KEY}`)
-                  .then( () => callback() );
-    return {
-        type: DELETE_POST,
-        payload: id
     }
 }
